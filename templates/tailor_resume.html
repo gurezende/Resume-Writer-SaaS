@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailor Your Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-black flex flex-col items-center min-h-screen p-4 text-white">
+    <!-- Navigation Bar -->
+    <nav class="w-full bg-gray-900 bg-opacity-80 backdrop-blur-sm fixed top-0 left-0 z-50 shadow-lg py-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <!-- Logo/Home Link -->
+            <a href="/" class="text-2xl font-bold text-white hover:text-blue-400 transition-colors duration-300">Resume Tailor</a>
+
+            <!-- Navigation Links -->
+            <div class="space-x-8">
+                <a href="/" class="text-lg text-gray-300 hover:text-white transition-colors duration-300">Home</a>
+                <a href="/subscriptions" class="text-lg text-gray-300 hover:text-white transition-colors duration-300">Pricing</a>
+                <a href="/login" class="text-lg text-gray-300 hover:text-white transition-colors duration-300">Login</a>
+                <a href="/logout" class="text-lg text-red-400 hover:text-red-300 transition-colors duration-300">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-6 text-center max-w-3xl bg-gray-900 rounded-xl shadow-lg mt-24">
+        <h1 class="text-4xl font-bold mb-4 text-blue-400">Tailor Your Resume</h1>
+        {% if username %}
+            <p class="text-gray-400 mb-8">Welcome, {{ username }}!</p>
+        {% endif %}
+
+        {% if error %}
+            <p class="text-red-500 mb-4">{{ error }}</p>
+        {% endif %}
+
+        <form id="tailorForm" action="{{ url_for('tailor_resume') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            <div>
+                <label for="job_description" class="block text-left text-gray-300 text-lg mb-2">Job Description:</label>
+                <textarea id="job_description" name="job_description" rows="8" required
+                          class="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Paste the job description here..."></textarea>
+            </div>
+            <div>
+                <label for="resume_file" class="block text-left text-gray-300 text-lg mb-2">Upload Your Resume (.txt or .docx):</label>
+                <input type="file" id="resume_file" name="resume_file" accept=".txt,.docx" required
+                       class="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700 file:mr-4 file:py-2 file:px-4
+                              file:rounded-full file:border-0 file:text-sm file:font-semibold
+                              file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+                <p class="text-sm text-gray-500 mt-2 text-left">
+                    Note: For this demo, .docx content processing is simulated.
+                </p>
+            </div>
+            <button type="submit" id="tailorButton"
+                    class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">
+                Tailor My Resume
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Get references to the form and the button
+        const tailorForm = document.getElementById('tailorForm');
+        const tailorButton = document.getElementById('tailorButton');
+
+        // Add an event listener for when the form is submitted
+        tailorForm.addEventListener('submit', function() {
+            // Disable the button to prevent multiple submissions
+            tailorButton.disabled = true;
+            // Change the button text to indicate processing
+            tailorButton.textContent = 'Tailoring...';
+            // Optionally, change the button's background color to gray it out
+            tailorButton.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'focus:ring-blue-500');
+            tailorButton.classList.add('bg-gray-500', 'cursor-not-allowed');
+            // Remove hover scale effect as it's disabled
+            tailorButton.classList.remove('transform', 'hover:scale-105');
+        });
+    </script>
+</body>
+</html>

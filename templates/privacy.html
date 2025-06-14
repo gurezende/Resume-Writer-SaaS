@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-black flex flex-col items-center min-h-screen p-4 text-white">
+    <!-- Navigation Bar -->
+    <nav class="w-full bg-gray-900 bg-opacity-80 backdrop-blur-sm fixed top-0 left-0 z-50 shadow-lg py-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <!-- Logo/Home Link -->
+            <a href="/" class="text-2xl font-bold text-white hover:text-blue-400 transition-colors duration-300">Resume Tailor</a>
+
+            <!-- Navigation Links -->
+            <div class="space-x-8">
+                <a href="/" class="text-lg text-gray-300 hover:text-white transition-colors duration-300">Home</a>
+                <a href="/subscriptions" class="text-lg text-gray-300 hover:text-white transition-colors duration-300">Pricing</a>
+                <a href="/login" class="text-lg text-gray-300 hover:text-white transition-colors duration-300">Login</a>
+                <a href="/contact" class="text-lg text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-6 text-left max-w-2xl bg-gray-900 rounded-xl shadow-lg mt-24">
+        <h1 class="text-4xl font-bold mb-8 text-blue-400">Privacy Policy</h1>
+        <p class="text-gray-300 mb-4">
+            This is a placeholder for your Privacy Policy. Your privacy is important to us.
+            This section will detail how we collect, use, and protect your personal information.
+        </p>
+        <p class="text-gray-300 mb-4">
+            We are committed to ensuring the security and confidentiality of any data you provide,
+            especially your resume and job descriptions, which are processed by our AI agents
+            solely for the purpose of tailoring your resume.
+        </p>
+        <p class="text-gray-300 mb-4">
+            For more details, please check back later for the full policy.
+        </p>
+    </div>
+
+    <!-- Footer (duplicated for consistency, in a real app you might use a Jinja2 include) -->
+    <footer class="w-full bg-gray-900 bg-opacity-80 backdrop-blur-sm py-8 text-center text-gray-400 mt-auto">
+        <div class="container mx-auto flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+            <p>&copy; 2024 Resume Tailor. All rights reserved.</p>
+            <div class="flex space-x-4">
+                <a href="/privacy" class="hover:text-white transition-colors duration-300">Privacy Policy</a>
+                <a href="/terms" class="hover:text-white transition-colors duration-300">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

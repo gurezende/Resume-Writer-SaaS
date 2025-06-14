@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Tailor</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for a clean look */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-black flex flex-col items-center min-h-screen text-white">
+    <!-- Navigation Bar (fixed at top) -->
+    <nav class="w-full bg-gray-900 bg-opacity-80 backdrop-blur-sm fixed top-0 left-0 z-50 shadow-lg py-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <!-- Logo/Home Link -->
+            <a href="/" class="text-2xl font-bold text-white hover:text-blue-400 transition-colors duration-300">Resume Tailor</a>
+
+            <!-- Navigation Links -->
+            <div class="space-x-8">
+                <a href="/" class="text-lg text-gray-300 hover:text-white transition-colors duration-300">Home</a>
+                <a href="/subscriptions" class="text-lg text-gray-300 hover:text-white transition-colors duration-300">Pricing</a>
+                <a href="/login" class="text-lg text-gray-300 hover:text-white transition-colors duration-300">Login</a>
+                <a href="/contact" class="text-lg text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Background Image and Title -->
+    <div class="relative w-full pt-24 pb-16 flex items-center justify-center">
+        <!-- Background Image with Opacity -->
+        <img
+            src="{{ url_for('static', filename='img/digital_bkg.jpg') }}"
+            alt="Abstract tech background with interconnected lines"
+            class="absolute inset-0 w-full h-full object-cover opacity-60"
+            onerror="this.onerror=null;this.src='https://placehold.co/1200x400/333333/ffffff?text=Image+Unavailable';"
+        >
+        <!-- Optional overlay for better text readability on top of the image -->
+        <div class="absolute inset-0 bg-black opacity-20"></div>
+
+        <!-- Text Content (Main Title and Sub-heading) -->
+        <div class="relative z-10 text-center px-4 max-w-4xl">
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8 leading-tight">
+                Elevate Your Job Search: AI-Powered Resume Tailoring
+            </h1>
+            <p class="text-2xl md:text-3xl text-gray-300 mb-0">
+                Instantly Optimize Your Resume for Every Application
+            </p>
+        </div>
+    </div>
+
+    <!-- Rest of the content sections -->
+    <div class="container mx-auto p-6 text-center max-w-4xl">
+        <!-- How It Works Section -->
+        <div class="bg-black rounded-xl p-8 shadow-lg mb-12 border border-black">
+            <h2 class="text-4xl font-bold text-blue-400 mb-6">How It Works: Simple & Smart</h2>
+            <p class="text-lg md:text-xl text-gray-200 mb-8">
+                Our process is designed for maximum impact with minimal effort from you:
+            </p>
+            <div class="text-left text-xl md:text-2xl space-y-8 mb-10 mx-auto max-w-xl">
+                <!-- Step 1 -->
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-blue-600 text-white font-bold text-2xl rounded-full mr-4 shadow-md">
+                        1
+                    </div>
+                    <div>
+                        <span class="font-semibold text-white">Input Your Information:</span> Simply paste the <span class="font-bold text-blue-300">Job Description</span> and upload your current <span class="font-bold text-blue-300">resume</span>.
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-purple-600 text-white font-bold text-2xl rounded-full mr-4 shadow-md">
+                        2
+                    </div>
+                    <div>
+                        <span class="font-semibold text-white">AI Analyzes & Optimizes:</span> Our intelligent <span class="font-bold text-blue-300">AI Agents</span> go to work, analyzing both documents. They meticulously <span class="font-bold text-blue-300">optimize your resume for ATS</span> (Applicant Tracking Systems) and tailor it to the specific keywords and requirements of the Job Description.
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-green-600 text-white font-bold text-2xl rounded-full mr-4 shadow-md">
+                        3
+                    </div>
+                    <div>
+                        <span class="font-semibold text-white">Receive Your Tailored Resume:</span> Get your perfectly optimized resume back in a clean, professional <span class="font-bold text-blue-300">Markdown format</span>, ready for submission.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Maximize Your Interview Potential Section -->
+        <div class="bg-gray-900 rounded-xl p-8 shadow-lg mb-12 border border-gray-700">
+            <h2 class="text-4xl font-bold text-blue-400 mb-6">Maximize Your Interview Potential</h2>
+            <ul class="text-left text-xl md:text-2xl space-y-4 mx-auto max-w-xl">
+                <li class="flex items-start">
+                    <svg class="w-7 h-7 mr-3 mt-1 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <div>
+                        <span class="font-bold text-blue-300">Tailor Your Resume Using AI!</span> Leverage advanced technology to create a document that speaks directly to the hiring manager's needs.
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-7 h-7 mr-3 mt-1 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <div>
+                        <span class="font-bold text-blue-300">ATS Optimization:</span> Beat the bots! Our AI ensures your resume passes through Applicant Tracking Systems, getting it seen by human eyes.
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-7 h-7 mr-3 mt-1 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <div>
+                        <span class="font-bold text-blue-300">Resume Perfectly Fit to the Job Description:</span> Stop guessing what recruiters want. Your resume will highlight the most relevant skills and experiences for <em class="font-italic">each specific role</em>.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Simple, Fast, Effective Section -->
+        <div class="bg-gray-900 rounded-xl p-8 shadow-lg mb-12 border border-gray-700">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-100 mb-4">Simple, Fast, Effective</h2>
+            <p class="text-xl md:text-2xl text-gray-300">
+                We believe powerful tools don't need to be complicated. Our app is built with <span class="font-bold">no frills</span>, making it incredibly <span class="font-bold">easy to subscribe and use</span>. Focus on your job search, not on learning complex software.
+            </p>
+        </div>
+
+
+        <!-- Call to Action -->
+        <a href="/subscriptions" class="inline-block bg-blue-600 text-white font-bold py-4 px-10 rounded-full text-2xl shadow-lg hover:bg-blue-700 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">
+            Get Started
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full bg-gray-900 bg-opacity-80 backdrop-blur-sm py-8 text-center text-gray-400 mt-auto">
+        <div class="container mx-auto flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+            <p>&copy; 2025 Resume Tailor. All rights reserved.</p>
+            <div class="flex space-x-4">
+                <a href="/privacy" class="hover:text-white transition-colors duration-300">Privacy Policy</a>
+                <a href="/terms" class="hover:text-white transition-colors duration-300">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
