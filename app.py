@@ -1,11 +1,42 @@
-from flask import Flask, render_template, request, redirect, url_for, session, send_file
-import io
+# Imports
+import requests
+import json
+import hmac
+import hashlib
+from datetime import datetime, timedelta, timezone, date
+from flask import Flask, render_template, request, redirect, url_for, session, flash, abort
+from supabase import create_client, Client
+from dotenv import load_dotenv
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
-# Import your AI agent's function
+import io
+# Import AI agent's function
 from ai_agent import run_ai_tailoring
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
+
+# --- Supabase Configuration ---
+supabase_url = os.environ.get("SUPABASE_URL")
+supabase_key = os.environ.get("SUPABASE_KEY")
+
+supabase: Client = create_client(supabase_url, supabase_key)
+
+# --- Lemon Squeezy Configuration ---
+LEMONSQUEEZY_API_KEY = os.environ.get("LEMONSQUEEZY_API_KEY")
+LEMONSQUEEZY_STORE_ID = os.environ.get("LEMONSQUEEZY_STORE_ID")
+LEMONSQUEEZY_STANDARD_VARIANT_ID = os.environ.get("LEMONSQUEEZY_STANDARD_VARIANT_ID")
+LEMONSQUEEZY_PRO_VARIANT_ID = os.environ.get("LEMONSQUEEZY_PRO_VARIANT_ID")
+LEMONSQUEEZY_WEBHOOK_SECRET = os.environ.get("LEMONSQUEEZY_WEBHOOK_SECRET")
+LEMONSQUEEZY_API_URL = "https://api.lemonsqueezy.com/v1"
+LEMONSQUEEZY_CHECKOUT_LINK_BASE = os.environ.get("LEMONSQUEEZY_CHECKOUT_LINK", "YOUR_SINGLE_CHECKOUT_LINK_HERE") # Load base link
+
+
+# --- Constants ---
+FREE_PLAN_MONTHLY_LIMIT = 3
+STANDARD_PLAN_MONTHLY_LIMIT = 15
+# Pro plan is effectively unlimited, checked by the is_pro_plan flag
+
 
 # --- Routes for Navigation (from previous steps) ---
 @app.route('/')
@@ -26,15 +57,56 @@ def signup():
     GET: Displays the signup form.
     POST: Processes the signup form.
     """
-    # If the request is a POST (user submitted the form)
+
+        # If the request is a POST (user submitted the form)
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password'] # In real app, hash this!
-        session['logged_in'] = True
-        session['username'] = username
-        print(f"MOCK SIGNUP: User '{username}' signed up and logged in.")
-        return redirect(url_for('tailor_resume'))
-    return render_template('auth.html', form_type='signup')
+        # Get email and password from the submitted form data
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        # Simple validation
+        if not email or not password:
+            flash('Email and password are required.', 'error')
+            return redirect(url_for('signup'))
+
+        # Query the 'users' table for an entry matching the email
+        existing_user_check = supabase.table('users').select('id', count='exact').eq('email', email).execute()
+
+        # If count > 0, the email is already registered
+        if existing_user_check.count > 0:
+            flash('Email address already registered.', 'error')
+            print(f"Signup failed: {email} already exists.")
+            return redirect(url_for('signup'))
+
+        # --- Create Lemon Squeezy Customer *Before* Supabase User ---
+        # Generate a simple name from the email for LS
+        name = email.split('@')[0].replace('.', '').replace('+', '')
+        ls_customer_id, ls_error = create_lemon_squeezy_customer(email, name)
+
+        # --- Create User in Supabase Database ---
+        # Hash the user's password securely before storing it
+        password_hash = generate_password_hash(password)
+
+        print(f"Creating Supabase user for {email} linked to LS ID {ls_customer_id}")
+        # Prepare the data for the new user row
+        user_data = {
+            'email': email,
+            'password_hash': password_hash,
+            'lemonsqueezy_customer_id': ls_customer_id,
+            'is_free_plan': True, # Default to Free plan
+            'is_standard_plan': False,
+            'is_pro_plan': False,
+            'message_count': 0,
+            'messages_this_hour': 0,
+            'last_message_timestamp': None,
+            'messages_this_month': 0,
+            'usage_reset_date': None
+        }
+        # Insert the new user data into the 'users' table
+        insert_result = supabase.table('users').insert(user_data).execute()
+
+    # If the request is GET (user just visiting the page), render the signup form
+    return render_template('signup.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
